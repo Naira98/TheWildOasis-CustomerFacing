@@ -3,4 +3,5 @@
 - React Server Components.
 - Server actions.
 - Authentication with NextAuth.
+- supabase
 - Tailwind.
