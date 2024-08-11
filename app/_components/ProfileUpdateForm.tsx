@@ -4,8 +4,8 @@ import { ReactElement } from "react";
 import Image from "next/image";
 
 import SubmitButton from "./SubmitButton";
+import { updateGuest } from "@/app/_lib/actions";
 import { Guest } from "@/app/_types/types";
-import { updateGuest } from "../_lib/actions";
 
 const ProfileUpdateForm = ({
   children,

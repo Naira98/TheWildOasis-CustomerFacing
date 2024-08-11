@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import {
   differenceInDays,
   isPast,
@@ -8,9 +9,8 @@ import {
 } from "date-fns";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
-import { Cabin, ContextValues, Settings } from "../_types/types";
 import { useReservation } from "./ReservationContext";
-import { useEffect, useMemo } from "react";
+import { Cabin, ContextValues, Settings } from "@/app/_types/types";
 
 interface Props {
   cabin: Cabin;

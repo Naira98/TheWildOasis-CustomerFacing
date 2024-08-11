@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import { differenceInDays } from "date-fns";
+import { User } from "next-auth";
 
 import SubmitButton from "./SubmitButton";
-import { User } from "next-auth";
-import { Cabin } from "../_types/types";
 import { useReservation } from "./ReservationContext";
 import { createBooking } from "@/app/_lib/actions";
+import { Cabin } from "@/app/_types/types";
 
 function ReservationForm({ cabin, user }: { cabin: Cabin; user: User }) {
   const { maxCapacity, regularPrice, discount, id } = cabin;

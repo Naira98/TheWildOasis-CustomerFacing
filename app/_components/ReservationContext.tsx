@@ -5,8 +5,8 @@ import {
   useContext,
   useState,
 } from "react";
-import { ContextValues } from "../_types/types";
 import { DateRange } from "react-day-picker";
+import { ContextValues } from "@/app/_types/types";
 
 const initialState = { to: undefined, from: undefined };
 const ReservationContext = createContext<ContextValues | null>(null);

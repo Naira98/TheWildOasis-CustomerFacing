@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { FC } from "react";
-
-import "@/app/_styles/globals.css";
-
 import { Josefin_Sans } from "next/font/google";
+
 import Header from "./_components/Header";
 import ReservationProvider from "./_components/ReservationContext";
+import "@/app/_styles/globals.css";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],

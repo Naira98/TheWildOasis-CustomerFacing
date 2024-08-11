@@ -3,7 +3,7 @@ import { useOptimistic } from "react";
 
 import ReservationCard from "./ReservationCard";
 import { deleteBooking } from "@/app/_lib/actions";
-import { Booking } from "../_types/types";
+import { Booking } from "@/app/_types/types";
 
 const ReservationList = ({ bookings }: { bookings: Booking[] }) => {
   const [optimisticBookings, OptimisticDelete] = useOptimistic(

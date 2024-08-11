@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 import ReservationList from "@/app/_components/ReservationList";
-import { Booking, Session } from "@/app/_types/types";
 import { auth } from "@/app/_lib/auth";
 import { getBookings } from "@/app/_lib/data-service";
+import { Booking, Session } from "@/app/_types/types";
 
 export const metadata: Metadata = {
   title: "Reservations",
