@@ -10,6 +10,7 @@ import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { Cabin, ContextValues, Settings } from "../_types/types";
 import { useReservation } from "./ReservationContext";
+import { useEffect, useMemo } from "react";
 
 interface Props {
   cabin: Cabin;
@@ -36,6 +37,10 @@ function DateSelector({ cabin, settings, bookedDates }: Props) {
   const { minBookingLength, maxBookingLength } = settings;
 
   const displayRange = isAlreadyBooked(range, bookedDates) ? undefined : range;
+
+  useEffect(() => {
+    if (displayRange == undefined) resetRange();
+  }, [displayRange, resetRange]);
 
   return (
     <div className="flex flex-col justify-between">

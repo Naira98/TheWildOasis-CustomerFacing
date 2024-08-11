@@ -14,7 +14,8 @@ const ProfileUpdateForm = ({
   children: ReactElement;
   guest: Guest;
 }) => {
-  const { fullName, email, nationalID, nationality, countryFlag } = guest;
+  const { fullName, email, nationalID, countryFlag } = guest;
+
   return (
     <form
       action={updateGuest}
@@ -43,13 +44,15 @@ const ProfileUpdateForm = ({
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <label htmlFor="nationality">Where are you from?</label>
-          <Image
-            src={countryFlag}
-            alt="Country flag"
-            className="h-5 rounded-sm"
-            width={35}
-            height={20}
-          />
+          {countryFlag && (
+            <Image
+              src={countryFlag}
+              alt="Country flag"
+              className="h-5 rounded-sm"
+              width={35}
+              height={20}
+            />
+          )}
         </div>
 
         {children}
@@ -63,7 +66,7 @@ const ProfileUpdateForm = ({
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
         />
       </div>
-      <SubmitButton disableLabel='Updating...'>Update profile</SubmitButton>
+      <SubmitButton disableLabel="Updating...">Update profile</SubmitButton>
       <div className="flex justify-end items-center gap-6"></div>
     </form>
   );

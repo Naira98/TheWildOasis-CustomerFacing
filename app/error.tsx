@@ -6,7 +6,6 @@ interface Props {
 }
 
 export default function Error({ error, reset }: Props) {
-  console.log(reset);
 
   return (
     <main className="flex justify-center items-center flex-col gap-6">
