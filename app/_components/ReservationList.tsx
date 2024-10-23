@@ -1,6 +1,6 @@
 "use client";
-import { useOptimistic } from "react";
 
+import { useOptimistic } from "react";
 import ReservationCard from "./ReservationCard";
 import { deleteBooking } from "@/app/_lib/actions";
 import { Booking } from "@/app/_types/types";

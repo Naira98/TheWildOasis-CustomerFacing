@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-
 import image1 from "@/public/about-1.jpg";
 import { getCabins } from "@/app/_lib/data-service";
 

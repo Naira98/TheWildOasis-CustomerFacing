@@ -17,11 +17,7 @@ export default function ReservationProvider({
   children: ReactNode;
 }) {
   const [range, setRange] = useState<DateRange>(initialState);
-
-  // const setRange = useCallback((value: DateRange | undefined) => {
-  //   _setRange(value || initialState);
-  // }, []);
-
+  
   const resetRange = () => setRange(initialState);
 
   return (

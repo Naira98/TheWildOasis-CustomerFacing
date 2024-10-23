@@ -1,23 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import { differenceInDays } from "date-fns";
 import { User } from "next-auth";
-
 import SubmitButton from "./SubmitButton";
 import { useReservation } from "./ReservationContext";
 import { createBooking } from "@/app/_lib/actions";
 import { Cabin } from "@/app/_types/types";
+import { formatDateWithBackSlash } from "../_lib/formatDate";
+import { generateNumOfNights } from "../_lib/numOfNights";
 
 function ReservationForm({ cabin, user }: { cabin: Cabin; user: User }) {
   const { maxCapacity, regularPrice, discount, id } = cabin;
   const { range, resetRange } = useReservation()!;
 
-  const startDate = range.from;
-  const endDate = range.to;
+  let startDate = range.from && formatDateWithBackSlash(range.from);
+  const endDate = range.to && formatDateWithBackSlash(range.to);
 
-  const numNights =
-    range.from && range.to ? differenceInDays(range.to, range.from) : 0;
+  const numNights = generateNumOfNights(range.from && range.to);
   const cabinPrice = numNights * (regularPrice - discount);
 
   const bookingData = {

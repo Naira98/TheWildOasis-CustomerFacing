@@ -1,10 +1,8 @@
 import { Metadata } from "next";
-
 import SelectCountry from "@/app/_components/SelectCountry";
 import ProfileUpdateForm from "@/app/_components/ProfileUpdateForm";
 import { auth } from "@/app/_lib/auth";
 import { getGuest } from "@/app/_lib/data-service";
-
 import { Guest } from "@/app/_types/types";
 
 export const metadata: Metadata = {
@@ -13,7 +11,8 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const session = await auth();
-  const guest: Guest = await getGuest(session?.user?.email);
+  if (!session || !session.user) throw new Error('You are not authenticated')
+  const guest: Guest = await getGuest(session.user.email!);
 
   return (
     <div>

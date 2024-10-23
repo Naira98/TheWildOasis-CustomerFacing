@@ -1,16 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import {
-  differenceInDays,
-  isPast,
-  isSameDay,
-  isWithinInterval,
-} from "date-fns";
+import { endOfDay, isPast, isSameDay, isToday, isWithinInterval } from "date-fns";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { useReservation } from "./ReservationContext";
 import { Cabin, ContextValues, Settings } from "@/app/_types/types";
+import { generateNumOfNights } from "../_lib/numOfNights";
 
 interface Props {
   cabin: Cabin;
@@ -29,10 +25,9 @@ function isAlreadyBooked(range: DateRange, datesArr: Date[]) {
 
 function DateSelector({ cabin, settings, bookedDates }: Props) {
   const { range, setRange, resetRange }: ContextValues = useReservation()!;
-
+  
   const { regularPrice, discount } = cabin;
-  const numNights =
-    range.from && range.to ? differenceInDays(range.to, range.from) : 0;
+  const numNights = generateNumOfNights(range.from, range.to);
   const cabinPrice = numNights * (regularPrice - discount);
   const { minBookingLength, maxBookingLength } = settings;
 
@@ -60,7 +55,7 @@ function DateSelector({ cabin, settings, bookedDates }: Props) {
           numberOfMonths={2}
           disabled={(curDate) => {
             return (
-              isPast(curDate) ||
+              isPast(endOfDay(curDate)) ||
               bookedDates.some((date) => isSameDay(date, curDate))
             );
           }}

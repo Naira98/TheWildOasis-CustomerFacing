@@ -1,7 +1,6 @@
 import { UsersIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Image from "next/image";
-
 import { Cabin } from "@/app/_types/types";
 
 function CabinCard({ cabin }: { cabin: Cabin }) {
