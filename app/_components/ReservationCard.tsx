@@ -6,13 +6,7 @@ import DeleteReservation from "./DeleteReservation";
 import { Reservation } from "@/app/_types/types";
 import { formatDistanceFromNow } from "../_lib/formatDate";
 
-function ReservationCard({
-  booking,
-  onDelete,
-}: {
-  booking: Reservation;
-  onDelete: Function;
-}) {
+function ReservationCard({ booking }: { booking: Reservation }) {
   const {
     id,
     startDate,
@@ -86,7 +80,7 @@ function ReservationCard({
               <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
               <span className="mt-1">Edit</span>
             </Link>
-            <DeleteReservation bookingId={id} onDelete={onDelete} />
+            <DeleteReservation bookingId={id} />
           </>
         ) : null}
       </div>

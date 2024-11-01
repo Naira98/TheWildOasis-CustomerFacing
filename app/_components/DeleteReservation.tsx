@@ -3,11 +3,12 @@
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { useTransition } from "react";
 import SpinnerMini from "./SpinnerMini";
+import { deleteBooking } from "../_lib/actions";
 
-function DeleteReservation({ bookingId, onDelete }: { bookingId: number, onDelete: Function }) {
+function DeleteReservation({ bookingId }: { bookingId: number }) {
   const [isPending, startTransition] = useTransition();
   function handleDelete() {
-    startTransition(() => onDelete(bookingId));
+    startTransition(async () => await deleteBooking(bookingId));
   }
   return (
     <button
