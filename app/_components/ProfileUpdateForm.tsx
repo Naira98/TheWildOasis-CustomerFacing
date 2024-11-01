@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement } from "react";
+import { ReactNode } from "react";
 import Image from "next/image";
 import SubmitButton from "./SubmitButton";
 import { updateGuest } from "@/app/_lib/actions";
@@ -10,7 +10,7 @@ const ProfileUpdateForm = ({
   children,
   guest,
 }: {
-  children: ReactElement;
+  children: ReactNode;
   guest: Guest;
 }) => {
   const { fullName, email, nationalID, countryFlag } = guest;

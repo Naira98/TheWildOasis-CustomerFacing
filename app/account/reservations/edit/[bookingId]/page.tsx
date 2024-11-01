@@ -8,8 +8,8 @@ export default async function Page({
   params: { bookingId: string };
 }) {
   const bookingId = Number(params.bookingId);
-  const { numGuests, observations, cabinId } = await getBooking(bookingId);
-  const { maxCapacity } = await getCabin(cabinId);
+  const { numGuests, observations, cabinId } = await getBooking((bookingId));
+  const { maxCapacity } = await getCabin(Number(cabinId));
 
   const handleUpdate = updateBooking.bind(null, bookingId);
 

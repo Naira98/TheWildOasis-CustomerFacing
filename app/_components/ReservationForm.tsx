@@ -6,18 +6,18 @@ import SubmitButton from "./SubmitButton";
 import { useReservation } from "./ReservationContext";
 import { createBooking } from "@/app/_lib/actions";
 import { Cabin } from "@/app/_types/types";
-import { formatDateWithBackSlash } from "../_lib/formatDate";
+import { formatDate } from "../_lib/formatDate";
 import { generateNumOfNights } from "../_lib/numOfNights";
 
 function ReservationForm({ cabin, user }: { cabin: Cabin; user: User }) {
   const { maxCapacity, regularPrice, discount, id } = cabin;
   const { range, resetRange } = useReservation()!;
+  const startDate = range.from && formatDate(range.from);
+  const endDate = range.to && formatDate(range.to);
 
-  let startDate = range.from && formatDateWithBackSlash(range.from);
-  const endDate = range.to && formatDateWithBackSlash(range.to);
-
-  const numNights = generateNumOfNights(range.from && range.to);
-  const cabinPrice = numNights * (regularPrice - discount);
+  const numNights =
+    startDate && endDate && generateNumOfNights(startDate, endDate);
+  const cabinPrice = numNights && numNights * (regularPrice - discount);
 
   const bookingData = {
     startDate,
@@ -36,7 +36,6 @@ function ReservationForm({ cabin, user }: { cabin: Cabin; user: User }) {
 
         <div className="flex gap-4 items-center">
           <Image
-            // Important to display google profile images
             referrerPolicy="no-referrer"
             className="h-8 rounded-full"
             src={user.image!}
@@ -44,6 +43,7 @@ function ReservationForm({ cabin, user }: { cabin: Cabin; user: User }) {
             width={32}
             height={32}
           />
+          <p>{user.name}</p>
         </div>
       </div>
 

@@ -1,12 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
-import { format, formatDistance, isPast, isToday, parseISO } from "date-fns";
+import { format, isPast, isToday } from "date-fns";
 import DeleteReservation from "./DeleteReservation";
-import { Booking } from "@/app/_types/types";
+import { Reservation } from "@/app/_types/types";
 import { formatDistanceFromNow } from "../_lib/formatDate";
 
-function ReservationCard({ booking, onDelete }: { booking: Booking, onDelete: Function }) {
+function ReservationCard({
+  booking,
+  onDelete,
+}: {
+  booking: Reservation;
+  onDelete: Function;
+}) {
   const {
     id,
     startDate,
@@ -17,6 +23,9 @@ function ReservationCard({ booking, onDelete }: { booking: Booking, onDelete: Fu
     created_at,
     cabins: { name, image },
   } = booking;
+
+  const isPastReserve = isPast(new Date(startDate));
+  const isTodayReserve = isToday(new Date(startDate));
 
   return (
     <div className="flex border border-primary-800">
@@ -34,7 +43,11 @@ function ReservationCard({ booking, onDelete }: { booking: Booking, onDelete: Fu
           <h3 className="text-xl font-semibold">
             {numNights} nights in Cabin {name}
           </h3>
-          {isPast(new Date(startDate)) ? (
+          {isTodayReserve ? (
+            <span className="bg-green-800 text-green-200 h-7 px-3 uppercase text-xs font-bold flex items-center rounded-sm">
+              today
+            </span>
+          ) : isPastReserve ? (
             <span className="bg-yellow-800 text-yellow-200 h-7 px-3 uppercase text-xs font-bold flex items-center rounded-sm">
               past
             </span>
@@ -47,10 +60,8 @@ function ReservationCard({ booking, onDelete }: { booking: Booking, onDelete: Fu
 
         <p className="text-lg text-primary-300">
           {format(new Date(startDate), "EEE, MMM dd yyyy")} (
-          {isToday(new Date(startDate))
-            ? "Today"
-            : formatDistanceFromNow(startDate)}
-          ) &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
+          {isTodayReserve ? "Today" : formatDistanceFromNow(startDate)}) &mdash;{" "}
+          {format(new Date(endDate), "EEE, MMM dd yyyy")}
         </p>
 
         <div className="flex gap-5 mt-auto items-baseline">
@@ -66,7 +77,7 @@ function ReservationCard({ booking, onDelete }: { booking: Booking, onDelete: Fu
       </div>
 
       <div className="flex flex-col border-l border-primary-800 w-[100px]">
-        {!isPast(startDate) ? (
+        {!isPastReserve ? (
           <>
             <Link
               href={`/account/reservations/edit/${id}`}

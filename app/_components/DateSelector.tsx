@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
-import { endOfDay, isPast, isSameDay, isToday, isWithinInterval } from "date-fns";
+import { useLayoutEffect } from "react";
+import { endOfDay, isPast, isSameDay, isWithinInterval } from "date-fns";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { useReservation } from "./ReservationContext";
 import { Cabin, ContextValues, Settings } from "@/app/_types/types";
 import { generateNumOfNights } from "../_lib/numOfNights";
+import { formatDate } from "../_lib/formatDate";
 
 interface Props {
   cabin: Cabin;
@@ -24,16 +25,20 @@ function isAlreadyBooked(range: DateRange, datesArr: Date[]) {
 }
 
 function DateSelector({ cabin, settings, bookedDates }: Props) {
-  const { range, setRange, resetRange }: ContextValues = useReservation()!;
-  
+  const { range, setRange, resetRange }: ContextValues = useReservation();
   const { regularPrice, discount } = cabin;
-  const numNights = generateNumOfNights(range.from, range.to);
-  const cabinPrice = numNights * (regularPrice - discount);
+
+  const startDate = range.from && formatDate(range.from);
+  const endDate = range.to && formatDate(range.to);
+
+  const numNights =
+    startDate && endDate && generateNumOfNights(startDate, endDate);
+  const cabinPrice = numNights && numNights * (regularPrice - discount);
   const { minBookingLength, maxBookingLength } = settings;
 
   const displayRange = isAlreadyBooked(range, bookedDates) ? undefined : range;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (displayRange == undefined) resetRange();
   }, [displayRange, resetRange]);
 

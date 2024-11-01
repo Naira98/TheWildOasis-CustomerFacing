@@ -1,11 +1,14 @@
 import { formatDistance, parseISO } from "date-fns";
 
-export function formatDateWithBackSlash(date: Date) {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
-  }).format(date);
+export function formatDate(date: Date) {
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    23,
+    59,
+    59
+  ).toLocaleString("en-US", { timeZone: "Europe/Rome" });
 }
 
 export const formatDistanceFromNow = (dateStr: string) =>

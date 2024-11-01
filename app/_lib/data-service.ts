@@ -1,9 +1,7 @@
 import { eachDayOfInterval } from "date-fns";
 import { supabase } from "./supabase";
 import { notFound } from "next/navigation";
-
-/////////////
-// GET
+import { Guest, Reservation } from "../_types/types";
 
 export async function getCabin(id: number) {
   const { data, error } = await supabase
@@ -15,20 +13,6 @@ export async function getCabin(id: number) {
   if (error) {
     console.error(error);
     notFound();
-  }
-
-  return data;
-}
-
-export async function getCabinPrice(id: string) {
-  const { data, error } = await supabase
-    .from("cabins")
-    .select("regularPrice, discount")
-    .eq("id", id)
-    .single();
-
-  if (error) {
-    console.error(error);
   }
 
   return data;
@@ -58,7 +42,7 @@ export async function getGuest(email: string) {
   return data;
 }
 
-export async function getBooking(id: string) {
+export async function getBooking(id: number) {
   const { data, error } = await supabase
     .from("bookings")
     .select("*")
@@ -73,25 +57,21 @@ export async function getBooking(id: string) {
   return data;
 }
 
-/**
- * @param {number | undefined} guestId
- * @returns {Promise<import("../_types/types").Booking[]>}
- */
-export async function getBookings(guestId: string) {
-  const { data, error, count } = await supabase
+export async function getBookings(guestId: number): Promise<Reservation[]> {
+  const { data, error } = await supabase
     .from("bookings")
     .select(
-      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)"
+      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name,image)"
     )
     .eq("guestId", guestId)
-    .order("startDate");
+    .order("startDate", { ascending: false });
 
   if (error) {
     console.error(error);
     throw new Error("Bookings could not get loaded");
   }
 
-  return data;
+  return data as unknown as Reservation[];
 }
 
 export async function getBookedDatesByCabinId(cabinId: number) {
@@ -145,10 +125,8 @@ export async function getCountries() {
   }
 }
 
-/////////////
-// CREATE
 
-export async function createGuest(newGuest: any[]) {
+export async function createGuest(newGuest: Guest) {
   const { data, error } = await supabase.from("guests").insert([newGuest]);
 
   if (error) {

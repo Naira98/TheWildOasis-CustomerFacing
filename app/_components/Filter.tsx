@@ -1,15 +1,16 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { FilterTypes } from "../_types/types";
 
 const Filter = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const activeFilter = searchParams.get("capacity") ?? "all";
+  const activeFilter = searchParams.get("capacity") ?? "all"
 
-  const handleFilter = (filter: string) => {
+  const handleFilter = (filter: FilterTypes) => {
     const params = new URLSearchParams(searchParams);
     params.set("capacity", filter);
     router.replace(`${pathname}?${params}`, { scroll: false });
@@ -49,7 +50,7 @@ const Filter = () => {
 };
 
 interface ButtonProps {
-  filter: string;
+  filter: FilterTypes;
   handleFilter: Function;
   activeFilter: string;
   children: string;

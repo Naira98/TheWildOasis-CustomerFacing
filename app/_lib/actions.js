@@ -1,14 +1,14 @@
 "use server";
+
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 import { getBookings } from "./data-service";
 
 export async function updateGuest(formData) {
   const session = await auth();
-  if (!session) throw new Error("You must be logged in");
+  if (!session.user) throw new Error("You must be logged in");
 
   const nationalID = formData.get("nationalID");
   const [nationality, countryFlag] = formData.get("nationality").split("%");
@@ -80,8 +80,6 @@ export async function updateBooking(bookingId, formData) {
 }
 
 export async function deleteBooking(bookingId) {
-  // await new Promise((res) => setTimeout(res, 2000));
-  // throw new Error()
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
 

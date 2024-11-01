@@ -6,7 +6,7 @@ import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { ParamsCabinId } from "@/app/_types/types";
 
 export async function generateMetadata({ params }: { params: ParamsCabinId }) {
-  const { name } = await getCabin(params.cabinId);
+  const { name } = await getCabin(Number(params.cabinId));
   return { title: `Cabin ${name}` };
 }
 export async function generateStaticParams() {
@@ -19,11 +19,11 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: { params: ParamsCabinId }) {
-  const cabin = await getCabin(params.cabinId);
+  const cabin = await getCabin(Number(params.cabinId));
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
-      <CabinDetails cabin={cabin}/>
+      <CabinDetails cabin={cabin} />
 
       <div>
         <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">

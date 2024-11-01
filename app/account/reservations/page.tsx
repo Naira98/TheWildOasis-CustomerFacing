@@ -4,7 +4,7 @@ import Link from "next/link";
 import ReservationList from "@/app/_components/ReservationList";
 import { auth } from "@/app/_lib/auth";
 import { getBookings } from "@/app/_lib/data-service";
-import { Booking, Session } from "@/app/_types/types";
+import { Reservation, Session } from "@/app/_types/types";
 
 export const metadata: Metadata = {
   title: "Reservations",
@@ -12,7 +12,8 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const session: Session | null = await auth();
-  const bookings: Booking[] = await getBookings(session?.user?.guestId);
+  if (!session || !session.user) throw new Error("You are not authenticated");
+  const bookings: Reservation[] = await getBookings(session.user.guestId!);
   return (
     <div>
       <h2 className="font-semibold text-2xl text-accent-400 mb-7">
@@ -27,7 +28,7 @@ export default async function Page() {
           </Link>
         </p>
       ) : (
-        <ReservationList bookings={bookings}/>
+        <ReservationList bookings={bookings} />
       )}
     </div>
   );

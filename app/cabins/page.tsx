@@ -4,15 +4,17 @@ import CabinList from "@/app/_components/CabinList";
 import Spinner from "@/app/_components/Spinner";
 import Filter from "@/app/_components/Filter";
 import ReservationReminder from "@/app/_components/ReservationReminder";
+import { FilterTypes } from "@/app/_types/types";
 
 export const metadata: Metadata = {
   title: "Cabins",
 };
 
-export const revalidate = 3600;
+/* Only on Static Rendered Pages */
+// export const revalidate = 3600;
 
 interface Props {
-  searchParams: { [index: string]: string };
+  searchParams: { capacity: FilterTypes };
 }
 
 export default function Page({ searchParams }: Props) {

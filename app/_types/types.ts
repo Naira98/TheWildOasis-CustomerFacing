@@ -1,7 +1,7 @@
 import { User as NextAuthUser, Session as NextAuthSession } from "next-auth";
 import { DateRange } from "react-day-picker";
 
-interface User extends NextAuthUser {
+export interface User extends NextAuthUser {
   guestId?: number;
 }
 
@@ -38,14 +38,27 @@ export interface Booking {
   extrasPrice: number;
   observations: string;
 }
+export type Reservation = Pick<
+  Booking,
+  | "id"
+  | "created_at"
+  | "startDate"
+  | "endDate"
+  | "numNights"
+  | "numGuests"
+  | "totalPrice"
+  | "guestId"
+  | "cabinId"
+  | "cabins"
+>;
 export interface Guest {
-  id: number;
-  created_at: string;
+  id?: number;
+  created_at?: string;
   fullName: string;
   email: string;
-  nationalID: number;
-  nationality: string;
-  countryFlag: string;
+  nationalID?: number;
+  nationality?: string;
+  countryFlag?: string;
 }
 export interface Settings {
   id: number;
@@ -62,9 +75,7 @@ export interface ContextValues {
   resetRange: () => void;
 }
 export interface ParamsCabinId {
-  cabinId: number;
+  cabinId: string;
 }
-// export type DateRange = {
-//   from?: Date | undefined;
-//   to?: Date | undefined;
-// };
+
+export type FilterTypes = "all" | "small" | "medium" | "large";

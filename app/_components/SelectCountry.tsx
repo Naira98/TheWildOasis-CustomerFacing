@@ -1,7 +1,7 @@
 import { getCountries } from "@/app/_lib/data-service";
 
 interface Props {
-  defaultCountry: string;
+  defaultCountry?: string | null;
   name: string;
   id: string;
   className: string;
