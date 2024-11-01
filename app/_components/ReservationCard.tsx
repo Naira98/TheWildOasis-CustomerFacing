@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
-import { format, isPast, isToday } from "date-fns";
+import { differenceInDays, format, isPast, isToday } from "date-fns";
 import DeleteReservation from "./DeleteReservation";
 import { Reservation } from "@/app/_types/types";
-import { formatDistanceFromNow } from "../_lib/formatDate";
 
 function ReservationCard({ booking }: { booking: Reservation }) {
   const {
@@ -20,6 +19,7 @@ function ReservationCard({ booking }: { booking: Reservation }) {
 
   const isPastReserve = isPast(new Date(startDate));
   const isTodayReserve = isToday(new Date(startDate));
+  const remaningDays = differenceInDays(startDate, Date.now());
 
   return (
     <div className="flex border border-primary-800">
@@ -54,8 +54,10 @@ function ReservationCard({ booking }: { booking: Reservation }) {
 
         <p className="text-lg text-primary-300">
           {format(new Date(startDate), "EEE, MMM dd yyyy")} (
-          {isTodayReserve ? "Today" : formatDistanceFromNow(startDate)}) &mdash;{" "}
-          {format(new Date(endDate), "EEE, MMM dd yyyy")}
+          {isTodayReserve
+            ? "Today"
+            : `In ${remaningDays} ${remaningDays === 1 ? "day" : "days"}`}
+          ) &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
         </p>
 
         <div className="flex gap-5 mt-auto items-baseline">
