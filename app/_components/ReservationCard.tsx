@@ -56,6 +56,10 @@ function ReservationCard({ booking }: { booking: Reservation }) {
           {format(new Date(startDate), "EEE, MMM dd yyyy")} (
           {isTodayReserve
             ? "Today"
+            : isPastReserve
+            ? `From ${Math.abs(remaningDays)} ${
+                Math.abs(remaningDays) === 1 ? "day" : "days"
+              }`
             : `In ${remaningDays} ${remaningDays === 1 ? "day" : "days"}`}
           ) &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
         </p>
